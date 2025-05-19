@@ -1,81 +1,105 @@
 import React, { useState } from 'react'
+import Navbar from './Navbar'
 
 const CreateUsers = () => {
 
-    const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    age: ""
-    });
+  const [image, setImage] = useState("")
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [age, setAge] = useState("")
+  const [bio, setBio] = useState("")
 
-      const handleChange = (e) => {
-        setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
-        });
-        };
+  const onSubmitHandler = (e) =>{
+    e.preventDefault()
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form submitted:", formData);
-        // Clear the form
-        setFormData({ name: "", email: "", age: "" });
-    };
+    setImage("")
+    setName("")
+    setEmail("")
+    setAge("")
+    setBio("")
+  }
+
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md"
-      >
-        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">
-          Add User
-        </h2>
+    <>
+      <Navbar/>
+    <div className='mt-[10rem] flex justify-center '>
+      <div className='h-[23rem] w-[20rem] border border-gray-300 shadow-lg rounded-2xl'>
+        <form onSubmit={(ev)=>onSubmitHandler(ev)} className='flex flex-col items-center gap-y-4'>
+        <h2 className='font-bold font-mono text-xl mt-2'>Add User</h2>
+        <div className='w-full flex justify-center'>
+            <input 
+              className='border border-gray-400 rounded w-[15rem] p-1'
+              type="text" 
+              value={image}
+              onChange={(eventObject)=>{
+                setImage(eventObject.target.value)
+              }}
+              required
+              placeholder='Enter Image URL'
+            />
+        </div>
 
-        <div className="mb-4">
-          <label className="block mb-1 text-gray-600">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        <div className='w-full flex justify-center'>
+          <input 
+          className='border border-gray-400 rounded w-[15rem] p-1'
+          type="text" 
+          value={name}
+          onChange={(eventObject)=>{
+            setName(eventObject.target.value) 
+            console.log(eventObject.target.value)
+          }}
+          required 
+          placeholder='Enter your name'
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block mb-1 text-gray-600">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+       <div className='w-full flex justify-center'>
+          <input 
+          className='border border-gray-400 rounded w-[15rem] p-1'
+          type="text" 
+          value={email}
+          onChange={(eventObject)=>{
+            setEmail(eventObject.target.value) 
+            console.log(eventObject.target.value)
+          }}
+          required 
+          placeholder='Enter your email'
           />
         </div>
 
-        <div className="mb-6">
-          <label className="block mb-1 text-gray-600">Age</label>
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+       <div className='w-full flex justify-center'>
+          <input 
+          className='border border-gray-400 rounded w-[15rem] p-1'
+          type="number" 
+          value={age}
+          onChange={(eventObject)=>{
+            setAge(eventObject.target.value) 
+            console.log(eventObject.target.value)
+          }}
+          required 
+          placeholder='Enter your age'
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-        >
-          Submit
-        </button>
+       <div className='w-full flex justify-center'>
+          <input 
+          className='border border-gray-400 rounded w-[15rem] p-1'
+          type="text" 
+          value={bio}
+          onChange={(eventObject)=>{
+            setBio(eventObject.target.value) 
+            console.log(eventObject.target.value)
+          }}
+          required 
+          placeholder='Enter your bio'
+          />
+        </div>
+        <button className='bg-gradient-to-r from-blue-600 to-cyan-300 p-2 w-[12rem] rounded-lg font-semibold text-[20px]'>Submit</button>
       </form>
+      </div>
     </div>
+    </>
   )
 }
 
