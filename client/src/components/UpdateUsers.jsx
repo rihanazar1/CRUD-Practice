@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from './Navbar'
+import { useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const UpdateUsers = () => {
 
@@ -8,9 +10,34 @@ const UpdateUsers = () => {
   const [email, setEmail] = useState("")
   const [age, setAge] = useState("")
   const [bio, setBio] = useState("")
+  const {id} = useParams()
+  const navigate = useNavigate()
+
+  const fetchPreviousData = () => {
+    axios.get("http://127.0.0.1:5000/user/showusers")
+    .then((res) => {
+      const user = res.data.showUser.find(u => u._id === id)
+        if (user) {
+          setImage(user.image)
+          setName(user.name)
+          setEmail(user.email)
+          setAge(user.age)
+          setBio(user.bio)
+        }
+    })
+  }
+
+  useEffect(() => {
+    fetchPreviousData()
+  }, [id])
+  
 
   const onSubmitHandler = (e) =>{
     e.preventDefault()
+
+    axios.put(`http://127.0.0.1:5000/user/update/${id}`, { image, name, email, age, bio })
+    .then(() => navigate('/'))
+    .catch(err => console.log(err))
 
     setImage("")
     setName("")

@@ -8,6 +8,6 @@ userRoutes.get("/showusers", userController.showUserController)
 
 userRoutes.delete("/delete/:id", userController.deleteUserController)
 
-// userRoutes.("/update/:id", userController.deleteUserController)
+userRoutes.put("/update/:id", userController.updateUserController)
 
 module.exports = userRoutes 

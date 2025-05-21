@@ -43,3 +43,19 @@ module.exports.deleteUserController = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+
+module.exports.updateUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, image, age, bio } = req.body;
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      { name, email, image, age, bio },
+      { new: true }
+    );
+    res.json({ updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
