@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from './Navbar'
+import axios from 'axios'
 
 const CreateUsers = () => {
 
@@ -11,6 +12,15 @@ const CreateUsers = () => {
 
   const onSubmitHandler = (e) =>{
     e.preventDefault()
+
+    axios.post("http://127.0.0.1:5000/user/create", {image, name, email, age, bio})
+
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 
     setImage("")
     setName("")

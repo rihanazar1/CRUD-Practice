@@ -11,7 +11,7 @@ const App = () => {
    <Routes>
       <Route path="/" element={<Users/>}/>
       <Route path="/create" element={<CreateUsers/>}/>
-      <Route path="/update" element={<UpdateUsers/>}/>
+      <Route path="/update:id" element={<UpdateUsers/>}/>
    </Routes>
   )
 }

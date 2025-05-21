@@ -31,3 +31,15 @@ module.exports.showUserController = async (req, res) => {
         res.status(500).json({message : "Internal Server Error"})
     }
 }
+
+
+
+module.exports.deleteUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await userModel.findByIdAndDelete(id);
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}

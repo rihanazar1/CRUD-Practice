@@ -1,27 +1,41 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './Navbar'
+import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Users = () => {
 
-    const [userData, setUserData] = useState([{
-        image:"https://images.unsplash.com/photo-1742017193358-e4f271a6b7b9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        name: "Rihan",
-        email: "rihan@mail.com",
-        bio: "Hi i am rihan",
-        age: 20
-    },
-    {
-        image:"https://images.unsplash.com/photo-1742017193358-e4f271a6b7b9?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        name: "Rihan",
-        email: "rihan@mail.com",
-        bio: "Hi i am rihan",
-        age: 21
-    }])
+    const [userData, setUserData] = useState([])
 
-    const deleteHandler = (index) =>{
-        setUserData(userData.filter((_, idx) => idx !== index));
+    const fetchUsers = () =>{
+        axios.get("http://127.0.0.1:5000/user/showusers")
+
+        .then((res) =>{
+            setUserData(res.data.showUser)
+            console.log(res)
+        })
+        .catch((err) =>{
+            console.log(err.response?.data)
+        })
     }
+
+    useEffect(() => {
+        fetchUsers()
+    },[])
+    
+
+    // const deleteHandler = (index) =>{
+    //     setUserData(userData.filter((_, idx) => idx !== index));
+    // }
+
+    const deleteHandler = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/user/delete/${id}`);
+            setUserData(userData.filter(user => user._id !== id));
+        } catch (error) {
+            console.error('Delete failed:', error);
+        }
+    };
 
     const navigate = useNavigate()
 
@@ -48,8 +62,8 @@ const Users = () => {
                             </div>
                             
                             <div className='flex justify-around '>
-                                <button onClick={()=>navigate("/create")} className='bg-gradient-to-r from-green-500 to-green-500 pt-1 pb-1 pl-2 pr-2 rounded text-white font-semibold'>Edit</button>
-                                <button onClick={() => deleteHandler(index)} className='bg-gradient-to-r from-red-500 to-pink-500 pt-1 pb-1 pl-2 pr-2 rounded text-white font-semibold'>Delete</button>
+                                <button onClick={()=>navigate(`/update/${userData._id}`)} className='bg-gradient-to-r from-green-500 to-green-500 pt-1 pb-1 pl-2 pr-2 rounded text-white font-semibold'>Edit</button>
+                                <button onClick={() => deleteHandler(userData._id)} className='bg-gradient-to-r from-red-500 to-pink-500 pt-1 pb-1 pl-2 pr-2 rounded text-white font-semibold'>Delete</button>
                             </div>
                         </div>
                 })
